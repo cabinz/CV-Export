@@ -20,6 +20,9 @@ def time_handler(row, colname):
 
 def literal_handler(string):
     """anything -> a constant string."""
+    
+    if not isinstance(string, str):
+        string = str(string)
     def hdlr(row, colname):
         return string
     return hdlr
@@ -91,6 +94,6 @@ def stringify_data_blk(blk: pd.DataFrame, pattern: str,
 
     ret = ''
     for i, row in blk.iterrows():
-        ret += stringify_data_row(row, pattern, row_idx=i, handler_map=handler_map)
+        ret += stringify_data_row(row, pattern, row_idx=i+1, handler_map=handler_map)
     return ret
 
