@@ -2,3 +2,6 @@
 *.out
 # All folders
 */
+# Local recording list and scrips 
+# (whose name begins with "my")
+my*
