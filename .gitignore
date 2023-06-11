@@ -1,0 +1,4 @@
+# All output files
+*.out
+# All folders
+*/
