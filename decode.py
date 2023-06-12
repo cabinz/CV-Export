@@ -41,10 +41,10 @@ class ColumnNameAtom(PatternAtom):
     """
 
     def __init__(self, colname: str, optional: bool = False) -> None:
-        self.colnanme = colname
+        self.colname = colname
 
     def __repr__(self):
-        return f'<{self.__class__.__name__}, "{self.colnanme}">'
+        return f'<{self.__class__.__name__}, "{self.colname}">'
 
 
 # endregion
