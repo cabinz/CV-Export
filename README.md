@@ -44,7 +44,8 @@ Export finishing time: 2023-06-12 01:04:37.562761
 
 ```
 python >= 3.6
-pandas==1.1.5
+pandas==1.5.3
+openpyxl==3.0.10
 ```
 
 # 使用

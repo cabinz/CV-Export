@@ -2,7 +2,7 @@ from typing import List, Union
 import pandas as pd 
 
 from decode import decode_pattern_string
-from decode import Pattern, ColumnNameAtom, LiteralAtom, PatternChunk
+from decode import ColumnNameAtom, LiteralAtom, PatternChunk, Pattern
 
 
 def identical_handler(row, colname):
