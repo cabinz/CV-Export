@@ -2,16 +2,10 @@ from cv_export import *
 from pathlib import Path
 from datetime import datetime
 
-########### Config ###########
-RES_ON_CONSOLE = False
-OUTPUT_TO_FILE = True
-OUT_DIR = Path('.')
-TIMESTAMP = datetime.now().strftime('%Y%m%d-%H%M%S')
-
 ########### Import data ###########
 DATA_PATH = './record-example.xlsx'
 df = pd.read_excel(DATA_PATH)
-## Filter out desired data rows.
+# Filter out desired data rows.
 df = df[
     (df["类别"] == "竞赛") |
     (df["类别"] == "奖学金") |
@@ -19,7 +13,7 @@ df = df[
     (df["类别"] == "社会实践")
 ]
 
-########### Transcript ###########
+########### Run ###########
 s_final = ''
 
 
@@ -30,21 +24,31 @@ cat_col = '级别'
 cats_to_extract = df[cat_col].unique()
 
 # Define patterns.
-time_pattern = '$颁发时间$, $项目$[/$奖项$], $机构$[/$级别$]'
-period_pattern = '$所属时期$, $项目$, $机构$'
+time_pattern = '$编号$. $颁发时间$, $项目$[($奖项$)], $机构$'
 
+# Define hanlders.
+def time_handler(row, colname):
+    """
+    Reformat time data into '%Y年的%m月%d日'
+    """
+    time = row[colname]
+    s = '{}年的{}月{}日'.format(
+        time.strftime('%Y'),
+        time.strftime('%m'),
+        time.strftime('%d'),
+    ) # Transform (reformat) the cell content.
+    return s
+    
+customized_handlers = {
+    '颁发时间': time_handler,
+}
+
+# Print.
 for cat in cats_to_extract:
     s_final += "="*7 + f"{cat}" + "="*7 + "\n"
     blk = df[df[cat_col] == cat]  # extract a block of a category
-    s_final += stringify_data_blk(blk, time_pattern, col_for_sorting='颁发时间')
-        
-
-# Output
-if RES_ON_CONSOLE:
-    print(s_final)
-if OUTPUT_TO_FILE:
-    out_path = OUT_DIR / f'分级-{TIMESTAMP}.out'
-    with out_path.open('x', encoding='utf-8') as outfile:
-        outfile.write(f'Export finishing time: {datetime.now()}\n')
-        outfile.write(s_final)
-    print(f'The output is stored in file {out_path}')
+    s_final += stringify_data_blk(blk, time_pattern, 
+                                  colname2handler=customized_handlers, 
+                                  col_for_sorting='颁发时间')
+    
+print(s_final)

@@ -12,7 +12,7 @@ TIMESTAMP = datetime.now().strftime('%Y%m%d-%H%M%S')
 DATA_PATH = './record-example.xlsx'
 df = pd.read_excel(DATA_PATH)
 
-########### Transcript ###########
+########### Run ###########
 s_final = ''
 
 
@@ -20,7 +20,6 @@ s_final = ''
 """
 # Spilt the output according to different category '类别', '级别', or others
 cat_col = '类别'
-# cat_col = '级别'
 cats_to_extract = df[cat_col].unique()
 
 # Define patterns
